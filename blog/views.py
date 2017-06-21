@@ -50,25 +50,3 @@ class CommentCreate(CreateView):
     model = Comment
     fields = ['comment_text']
     template_name = "blog/article_detail.html"
-
-
-
-def article_list(request):
-
-    return HttpResponse("")
-
-
-def article_create(request):
-    return HttpResponse("")
-
-
-def article_detail(request):
-    return HttpResponse("")
-
-
-def article_edit(request):
-    return HttpResponse("")
-
-
-def article_delete(request):
-    return HttpResponse("")
