@@ -1,1 +1,1 @@
-# simple-blog
+# Simple Blog using Python/Django
