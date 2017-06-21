@@ -46,6 +46,10 @@ class UserArticlesView(DetailView):
         return context
 
 
+class UserDetailView(DetailView):
+    model = User
+
+
 class CommentCreate(CreateView):
     model = Comment
     fields = ['comment_text']

@@ -43,6 +43,12 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
+                                {% if request.user.is_superuser %}
+                                <li>
+                                    <a href="/admin">Управление</a>
+                                </li>
+                                <li class="divider"></li>
+                                {% endif %}
                                 <li>
                                     <a href="#">Настройки</a>
                                 </li>
@@ -57,11 +63,8 @@
                     </ul>
                 {% else %}
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="/login" class="dropdown-toggle" role="button">Войти
-                                <span class="caret"></span>
-                            </a>
-                        </li>
+                        <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Регистрация</a></li>
+                        <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                     </ul>
                 {% endif %}
 
