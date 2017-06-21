@@ -1,0 +1,19 @@
+<ul class="pager">
+    <li class="previous">
+        {% if page_obj.has_previous %}
+            <a href="/blog?page={{ page_obj.previous_page_number }}">&larr; Предыдущее</a>
+        {% else %}
+            <a href="" class="btn disabled">&larr; Предыдущее</a>
+        {% endif %}
+    </li>
+    <li class="text-center">
+        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.</span>
+    </li>
+    <li class="next">
+        {% if page_obj.has_next %}
+            <a href="/blog?page={{ page_obj.next_page_number }}">Следующее &rarr;</a>
+        {% else %}
+            <a href="" class="btn disabled">&larr; Следующее</a>
+        {% endif %}
+    </li>
+</ul>
