@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head_title %}Статьи пользователя{% endblock %}
+
+{% block article %}
+    {% for article in object.article_set.all %}
+        <h2>
+            <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+        </h2>
+        <p class="lead">
+            <a href="">{{ article.author }}</a>
+        </p>
+        <p><span class="glyphicon glyphicon-time"></span> {{ article.published }}</p>
+        <hr>
+        <img class="img-responsive" src="{% static 'images' %}/{{ article.image }}" alt="">
+        <hr>
+        <a class="btn btn-primary" href="{% url 'article_detail' article.id %}">Читать дальше <span
+                class="glyphicon glyphicon-chevron-right"></span></a>
+
+        <hr>
+    {% endfor %}
+
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/blog?page={{ page_obj.previous_page_number }}">Предыдущее</a>
+                {% endif %}
+                <span class="page-current">
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/blog?page={{ page_obj.next_page_number }}">Следующее</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

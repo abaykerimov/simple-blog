@@ -1,1 +1,1 @@
-# Simple Blog using Python/Django
+# Simple blog using Python Django
