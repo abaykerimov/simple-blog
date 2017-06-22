@@ -9,7 +9,8 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-3 col-lg-3 " align="center">
-                        <img alt="Avatar" src="{% static 'images' %}/avatar.png" class="img-circle img-responsive"></div>
+                        <img alt="Avatar" src="{% static 'images' %}/avatar.png" class="img-circle img-responsive">
+                    </div>
 
                     <div class=" col-md-9 col-lg-9 ">
                         <table class="table table-user-information">
@@ -48,10 +49,38 @@
                             </tbody>
                         </table>
                         {% if object.id == request.user.id %}
-                        <a href="{% url 'user_article' object.id %}" class="btn btn-primary">Мои статьи</a>
-                        <a href="#" class="btn btn-primary">Мои комментарии</a>
+                            <a href="{% url 'user_article' object.id %}" class="btn btn-primary">Мои статьи</a>
+                            <a href="#" class="btn btn-primary">Мои комментарии</a>
                         {% endif %}
 
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 toppad">
+        <div class="panel panel-info">
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class=" col-md-12 col-lg-12 ">
+                        <h3 class="text-center">Мои статьи</h3>
+                        <ul class="list-group">
+                            {% for article in object.article_set.all %}
+                                <li class="list-group-item"><a href="{% url 'article_detail' article.id %}">{{ article.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class=" col-md-12 col-lg-12 ">
+                        <h3 class="text-center">Мои комментарии</h3>
+                        <ul class="list-group">
+                            {% for comment in object.comment_set.all %}
+                                <li class="list-group-item">{{ comment.comment_text }}</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
