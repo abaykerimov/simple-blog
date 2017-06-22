@@ -50,7 +50,7 @@
                                 <li class="divider"></li>
                                 {% endif %}
                                 <li>
-                                    <a href="#">Настройки</a>
+                                    <a href="user/{{ request.user.id }}">Настройки</a>
                                 </li>
                                 <li>
                                     <a href="{% url 'user_article' request.user.id %}">Мои статьи</a>
@@ -74,6 +74,7 @@
 
     <div class="row">
         {% block content %}{% endblock %}
+        {% block profile %}{% endblock %}
         <div class="col-md-8">
             {% block article %}{% endblock %}
             {% block comment %}{% endblock %}
