@@ -48,6 +48,12 @@ class UserArticlesView(DetailView):
 
 class UserDetailView(DetailView):
     model = User
+    template_name = "blog/user_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(UserDetailView, self).get_context_data(**kwargs)
+        context['avatar'] = User.objects.select_related()
+        return context
 
 
 class CommentCreate(CreateView):
