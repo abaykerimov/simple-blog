@@ -20,7 +20,7 @@ class Article(models.Model):
         (0, u'Не опубликованные')
     )
     title = models.CharField(verbose_name=u'Заголовок', max_length=255)
-    image = models.ImageField(blank=True, null=True)
+    image = models.ImageField(blank=True, null=True, upload_to="article")
     content = models.TextField(verbose_name=u'Текст статьи')
     author = models.ForeignKey(User)
     published = models.DateTimeField(verbose_name=u'Дата добавления', auto_now_add=True)
@@ -65,7 +65,7 @@ class Comment(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(blank=True, null=True)
+    avatar = models.ImageField(blank=True, null=True, upload_to="avatars")
     date_of_birth = models.DateField(auto_now_add=False, auto_created=False, blank=True, null=True)
 
     class Meta:
