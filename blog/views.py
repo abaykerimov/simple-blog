@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
-from django.views.generic import *
+from django.views.generic import ListView, DetailView, CreateView
 from blog.models import *
 
 

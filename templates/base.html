@@ -34,7 +34,13 @@
                                      src="{% static 'images' %}/django.png"></a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                {% block category %}{% endblock %}
+                {% block category %}
+                    <ul class="nav navbar-nav">
+                        {% for category in category_list %}
+                            <li><a href="{% url 'category' category.id %}" class="">{{ category.category_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endblock %}
                 {% if user.is_authenticated %}
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
