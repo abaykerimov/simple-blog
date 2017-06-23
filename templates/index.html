@@ -1,13 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block head_title %}Блог{% endblock %}
-{% block category %}
-    <ul class="nav navbar-nav">
-        {% for category in category_list %}
-            <li><a href="{% url 'category' category.id %}" class="">{{ category.category_name }}</a></li>
-        {% endfor %}
-    </ul>
-{% endblock %}
 
 {% block article %}
     {% for article in article_list %}

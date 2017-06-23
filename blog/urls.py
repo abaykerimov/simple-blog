@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from blog.views import *
+from blog.views import ArticleDetailView, IndexListView, CategoryDetailView, UserArticlesView, UserDetailView
 
 urlpatterns = [
     url(r'^$', IndexListView.as_view()),
