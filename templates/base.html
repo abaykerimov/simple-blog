@@ -50,7 +50,7 @@
                                 <li class="divider"></li>
                                 {% endif %}
                                 <li>
-                                    <a href="user/{{ request.user.id }}">Настройки</a>
+                                    <a href="{% url 'user_profile' request.user.id %}">Настройки</a>
                                 </li>
                                 <li>
                                     <a href="{% url 'user_article' request.user.id %}">Мои статьи</a>

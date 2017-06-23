@@ -65,8 +65,8 @@ class Comment(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(default="")
-    date_of_birth = models.DateField(auto_now_add=False, auto_created=False)
+    avatar = models.ImageField(blank=True, null=True)
+    date_of_birth = models.DateField(auto_now_add=False, auto_created=False, blank=True, null=True)
 
     class Meta:
         verbose_name = u'Пользователь'
