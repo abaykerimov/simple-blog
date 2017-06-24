@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 
 class Category(models.Model):
@@ -20,12 +21,12 @@ class Article(models.Model):
         (0, u'Не опубликованные')
     )
     title = models.CharField(verbose_name=u'Заголовок', max_length=255)
-    image = models.ImageField(blank=True, null=True, upload_to="article")
-    content = models.TextField(verbose_name=u'Текст статьи')
+    image = models.ImageField(blank=True, null=True, upload_to="article", verbose_name=u'Изображение')
+    content = RichTextField(verbose_name=u'Текст статьи')
     author = models.ForeignKey(User)
     published = models.DateTimeField(verbose_name=u'Дата добавления', auto_now_add=True)
     status = models.IntegerField(verbose_name=u'Статус статьи', choices=STATUSES, default=0)
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, verbose_name=u'Категория')
 
     class Meta:
         ordering = ('title',)

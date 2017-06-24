@@ -17,12 +17,13 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from django.contrib.auth import views
-from blog.forms import LoginForm
+from django.contrib.auth.views import LoginView, LogoutView
+from blog.views import RegisterUserView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include('blog.urls')),
-    url(r'^login/$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm}, name="login"),
-    url(r'^logout/$', views.logout, {'next_page': '/login'}),
+    url(r'^accounts/login/$', LoginView.as_view(), name="login"),
+    url(r'^accounts/register/$', RegisterUserView.as_view(), name="register"),
+    url(r'^logout/$', LogoutView.as_view(next_page="/accounts/login")),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

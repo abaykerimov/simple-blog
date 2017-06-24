@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
+    'bootstrap3',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -126,5 +129,7 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn')
-MEDIA_ROOT = os.path.join((BASE_DIR), 'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+CKEDITOR_UPLOAD_PATH = os.path.join(BASE_DIR, 'static/images/article')
 LOGIN_REDIRECT_URL = '/blog'
+CKEDITOR_BROWSE_SHOW_DIRS = True

@@ -15,6 +15,7 @@
     <![endif]-->
     <script src="{% static 'js/jquery-1.12.4.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/bootstrap.js' %}" type="text/javascript"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images' %}/favicon.ico"/>
 
 </head>
 <body>
@@ -69,8 +70,8 @@
                     </ul>
                 {% else %}
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Регистрация</a></li>
-                        <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
+                        <li><a href="/accounts/register"><span class="glyphicon glyphicon-user"></span> Регистрация</a></li>
+                        <li><a href="/accounts/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                     </ul>
                 {% endif %}
 

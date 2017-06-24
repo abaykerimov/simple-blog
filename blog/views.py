@@ -1,6 +1,15 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView
 from blog.models import *
+from blog.forms import RegisterForm
+
+
+class RegisterUserView(CreateView):
+    form_class = RegisterForm
+    success_url = "/accounts/login"
+    template_name = "registration/register.html"
 
 
 class IndexListView(ListView):
@@ -71,6 +80,10 @@ class ArticleCreate(CreateView):
     template_name = "blog/forms/article_form.html"
     fields = ['title', 'image', 'content', 'category']
     success_url = '/blog'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ArticleCreate, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.author = self.request.user

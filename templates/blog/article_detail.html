@@ -13,7 +13,7 @@
     <hr>
     <img class="img-responsive" src="{% static 'images' %}/{{ article.image }}" alt="">
     <hr>
-    <p>{{ article.content }}</p>
+    <p>{{ article.content|safe }}</p>
     <hr>
 {% endblock %}
 

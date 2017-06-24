@@ -3,6 +3,7 @@
 {% block head_title %}Статьи пользователя{% endblock %}
 
 {% block article %}
+    {% if object.article_set.all %}
     {% for article in object.article_set.all %}
         <h2>
             <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
@@ -19,7 +20,9 @@
 
         <hr>
     {% endfor %}
-
+    {% else %}
+    <p class="text-center">Упс, тут пусто:( Хотите написать статью?</p>
+    {% endif %}
     {% if is_paginated %}
         {% include "blog/pagination.html" %}
     {% endif %}
