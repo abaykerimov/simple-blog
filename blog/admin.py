@@ -17,7 +17,7 @@ class ArticleModelAdmin(admin.ModelAdmin):
 
 
 class CommentModelAdmin(admin.ModelAdmin):
-    list_display = ["comment_text", "author", "published", "article"]
+    list_display = ["comment_text", "author", "created_date", "article"]
 
     class Meta:
         model = Comment

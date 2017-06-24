@@ -1,6 +1,4 @@
-from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView
 from blog.models import *
 
@@ -60,5 +58,22 @@ class UserDetailView(DetailView):
 
 class CommentCreate(CreateView):
     model = Comment
-    fields = ['comment_text']
-    template_name = "blog/article_detail.html"
+    fields = ['comment_text', 'article']
+    template_name = "blog/forms/comment_form.html"
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(CommentCreate, self).form_valid(form)
+
+
+class ArticleCreate(CreateView):
+    model = Article
+    template_name = "blog/forms/article_form.html"
+    fields = ['title', 'image', 'content', 'category']
+    success_url = '/blog'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(ArticleCreate, self).form_valid(form)
+
+

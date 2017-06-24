@@ -24,7 +24,7 @@ class Article(models.Model):
     content = models.TextField(verbose_name=u'Текст статьи')
     author = models.ForeignKey(User)
     published = models.DateTimeField(verbose_name=u'Дата добавления', auto_now_add=True)
-    status = models.IntegerField(verbose_name=u'Статус статьи', choices=STATUSES)
+    status = models.IntegerField(verbose_name=u'Статус статьи', choices=STATUSES, default=0)
     category = models.ForeignKey(Category)
 
     class Meta:
@@ -50,8 +50,7 @@ class ArticleRating(models.Model):
 class Comment(models.Model):
     comment_text = models.TextField(verbose_name=u'Комментарий')
     author = models.ForeignKey(User)
-    published = models.DateTimeField()
-    created_date = models.DateTimeField(auto_created=True)
+    created_date = models.DateTimeField(auto_created=True, auto_now_add=True)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
 
     class Meta:

@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from blog.views import ArticleDetailView, IndexListView, CategoryDetailView, UserArticlesView, UserDetailView
+from blog.views import *
 
 urlpatterns = [
     url(r'^$', IndexListView.as_view()),
@@ -7,6 +7,8 @@ urlpatterns = [
     url(r'^(?P<pk>[-\w]+)/$', CategoryDetailView.as_view(), name="category"),
     url(r'^(?P<pk>[-\w]+)/articles/$', UserArticlesView.as_view(), name="user_article"),
     url(r'^user/(?P<pk>[-\w]+)/$', UserDetailView.as_view(), name="user_profile"),
+    url(r'^post/create/$', ArticleCreate.as_view(), name="article_create"),
+    url(r'^comment/create/$', CommentCreate.as_view(), name="comment_create"),
     # url(r'^$', "blog.views.article_list"),
     # url(r'^create/$', "blog.views.article_create"),
     # url(r'^detail/$', "blog.views.article_detail"),

@@ -18,11 +18,8 @@
 {% endblock %}
 
 {% block comment %}
+
     <div class="panel panel-white post panel-shadow">
-        <form action="" method="post">{% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Save" />
-        </form>
         <div class="post-footer">
             <div class="input-group">
                 <input class="form-control" placeholder="Добавить комментарий" type="text">
