@@ -2,7 +2,7 @@
 {% load static %}
 {% block head_title %}Профиль {{ request.user.username }}{% endblock %}
 
-{% block profile %}
+{% block content %}
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 toppad">
         <div class="panel panel-info">
 
@@ -64,7 +64,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class=" col-md-12 col-lg-12 ">
-                        <h3 class="text-center">Мои статьи</h3>
+                        <h3 class="text-center">Статьи</h3>
                     {% if object.article_set.all %}
                         <ul class="list-group">
                             {% for article in object.article_set.all %}
@@ -72,12 +72,12 @@
                             {% endfor %}
                         </ul>
                     {% else %}
-                    <p class="text-center">Вы не создали статью.</p>
+                    <p class="text-center">Пользователь не создал статью.</p>
                     {% endif %}
                     </div>
 
                     <div class=" col-md-12 col-lg-12 ">
-                        <h3 class="text-center">Мои комментарии</h3>
+                        <h3 class="text-center">Комментарии</h3>
                     {% if object.comment_set.all %}
                         <ul class="list-group">
                             {% for comment in object.comment_set.all %}
@@ -85,7 +85,7 @@
                             {% endfor %}
                         </ul>
                     {% else %}
-                    <p class="text-center">Вы не оставили комментарии.</p>
+                    <p class="text-center">Пользователь не оставил комментарии.</p>
                     {% endif %}
                     </div>
                 </div>

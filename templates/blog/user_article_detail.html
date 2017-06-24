@@ -11,7 +11,8 @@
         <p class="lead">
             <a href="">{{ article.author }}</a>
         </p>
-        <p><span class="glyphicon glyphicon-time"></span> {{ article.published }}</p>
+        <p><span class="glyphicon glyphicon-time"></span> {{ article.published }} {% if article.status == 0 %} -
+            <span style="color: red">Не опубликован</span>{% endif %}</p>
         <hr>
         <img class="img-responsive" src="{% static 'images' %}/{{ article.image }}" alt="">
         <hr>

@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^post/create/$', ArticleCreate.as_view(), name="article_create"),
     url(r'^comment/create/$', CommentCreate.as_view(), name="comment_create"),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+
     # url(r'^$', "blog.views.article_list"),
     # url(r'^create/$', "blog.views.article_create"),
     # url(r'^detail/$', "blog.views.article_detail"),

@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html">
     <title>{% block head_title %}{% endblock %}</title>
     {% load static %}
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
@@ -81,14 +82,12 @@
 
     <div class="row">
         {% block content %}{% endblock %}
-        {% block profile %}{% endblock %}
         <div class="col-md-8">
             {% block article %}{% endblock %}
-            {% block comment %}{% endblock %}
         </div>
 
         <div class="col-md-4">
-
+        {% block sidebar %}{% endblock %}
         </div>
 
     </div>

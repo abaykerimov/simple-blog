@@ -18,19 +18,13 @@ class IndexListView(ListView):
     template_name = 'index.html'
     paginate_by = 10
 
-    def get_context_data(self, **kwargs):
-        context = super(IndexListView, self).get_context_data(**kwargs)
-        context['category_list'] = Category.objects.all()
-        return context
-
 
 class ArticleDetailView(DetailView):
     model = Article
-
-    def get_context_data(self, **kwargs):
-        context = super(ArticleDetailView, self).get_context_data(**kwargs)
-        context['comment_list'] = Comment.objects.select_related()
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(ArticleDetailView, self).get_context_data(**kwargs)
+    #     context['comment_list'] = Comment.objects.select_related()
+    #     return context
 
 
 class CategoryDetailView(DetailView):
@@ -38,7 +32,7 @@ class CategoryDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)
-        context['article_list'] = Article.objects.select_related()
+        context['article_list'] = Article.objects.filter(category=self.object, status=1).order_by("-published")
         return context
 
 
@@ -47,11 +41,6 @@ class UserArticlesView(DetailView):
     template_name = "blog/user_article_detail.html"
     slug_field = 'id'
 
-    def get_context_data(self, **kwargs):
-        context = super(UserArticlesView, self).get_context_data(**kwargs)
-        context['article_list'] = Article.objects.select_related()
-        return context
-
 
 class UserDetailView(DetailView):
     model = User
@@ -59,9 +48,7 @@ class UserDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(UserDetailView, self).get_context_data(**kwargs)
-        context['user_profile'] = User.objects.select_related()
-        context['user_articles'] = Article.objects.select_related()
-        context['user_comments'] = Comment.objects.select_related()
+        context['user_profile'] = UserProfile.objects.filter(user=self.object)
         return context
 
 
