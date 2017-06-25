@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block head_title %}Создать статью{% endblock %}
+{% block article %}
+    <form class="form-horizontal" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {% bootstrap_form form %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Отправить</button>
+            <a href="/blog" class="btn btn-warning">Отмена</a>
+        </div>
+    </form>
+{% endblock %}
