@@ -60,7 +60,7 @@
 }
 .post .post-footer {
   border-top: 1px solid #ddd;
-  padding: 15px;
+  padding: 0 15px 0 15px;
 }
 .post .post-footer .input-group-addon a {
   color: #454545;
@@ -135,4 +135,47 @@
 }
 .toppad {
   margin-top: -20px;
+}
+
+span.add-text {
+    font-size: 18px;
+    padding: 20px 20px 20px 20px;
+    margin-top: 20px;
+}
+
+.glyphicon-plus {
+  font-size: 18px;
+}
+
+.sidebar {
+  margin-top: 30px;
+}
+
+.btn-text {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 30.5%;
+  margin-top:160px;
+  margin-left: 15px;
+}
+
+@media (max-width: 992px) {
+  .btn-text {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 265px;
+    margin-top:0;
+    margin-left: 0;
+  }
+
+  span.add-text {
+    font-size: 14px;
+    padding: 20px 20px 20px 20px;
+    margin-top: 20px;
+  }
+
+.glyphicon-plus {
+    font-size: 14px;
+  }
+
 }

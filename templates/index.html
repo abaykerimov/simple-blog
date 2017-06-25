@@ -4,9 +4,9 @@
 
 {% block article %}
     {% for article in article_list %}
-        <h2>
+        <h3>
             <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
-        </h2>
+        </h3>
         <p class="lead">
             <a href="{% url 'user_profile' article.author.id %}">{{ article.author }}</a>
         </p>
@@ -24,6 +24,8 @@
         {% include "blog/pagination.html" %}
     {% endif %}
 {% endblock %}
-{% block sidebar %}
-    <a href="{% url 'article_create' %}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>Добавить пост</a>
+{% block postbtn %}
+    <a href="{% url 'article_create' %}" class="btn btn-success btn-text">
+        <i class="glyphicon glyphicon-plus"></i><span class="add-text">Добавить пост</span></a>
+
 {% endblock %}

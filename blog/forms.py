@@ -18,3 +18,14 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+
+class CommentAddForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ['comment_text', 'article']
+        widgets = {
+            'comment_text': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Оставьте комментарий', 'rows': '3'}),
+            'article': forms.HiddenInput(),
+        }

@@ -23,71 +23,101 @@
 
 <div class="container">
     <nav class="navbar navbar-inverse" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="/blog"><img style="width: 100px; margin-left: -25px;margin-top: -25px"
-                                     src="{% static 'images' %}/django.png"></a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                {% block category %}
-                    <ul class="nav navbar-nav">
-                        {% for category in category_list %}
-                            <li><a href="{% url 'category' category.id %}" class="">{{ category.category_name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                {% endblock %}
-                {% if user.is_authenticated %}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">{{ request.user.username }}
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                {% if request.user.is_superuser %}
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/blog"><img style="width: 100px; margin-left: -25px;margin-top: -25px"
+                                 src="{% static 'images' %}/django.png"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% block category %}
+                <ul class="nav navbar-nav">
+                    {% for category in category_list %}
+                        <li><a href="{% url 'category' category.id %}" class="">{{ category.category_name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endblock %}
+            {% if user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">{{ request.user.username }}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            {% if request.user.is_superuser %}
                                 <li>
                                     <a href="/admin">Управление</a>
                                 </li>
                                 <li class="divider"></li>
-                                {% endif %}
-                                <li>
-                                    <a href="{% url 'user_profile' request.user.id %}">Настройки</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'user_article' request.user.id %}">Мои статьи</a>
-                                </li>
-                                <li>
-                                    <a href="/logout">Выйти</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                {% else %}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/accounts/register"><span class="glyphicon glyphicon-user"></span> Регистрация</a></li>
-                        <li><a href="/accounts/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
-                    </ul>
-                {% endif %}
+                            {% endif %}
+                            <li>
+                                <a href="{% url 'user_profile' request.user.id %}">Настройки</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'user_article' request.user.id %}">Мои статьи</a>
+                            </li>
+                            <li>
+                                <a href="/logout">Выйти</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/accounts/register"><span class="glyphicon glyphicon-user"></span> Регистрация</a>
+                    </li>
+                    <li><a href="/accounts/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
+                </ul>
+            {% endif %}
 
-            </div>
         </div>
     </nav>
-
+    {% block messages %}
+        {% if messages %}
+            {% for message in messages %}
+                <div {% if message.tags %}class="alert alert-{{ message.tags }} alert-dismissable col-md-8"{% endif %}>
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{{ message|capfirst }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endblock messages %}
     <div class="row">
+        {% block postbtn %}{% endblock %}
         {% block content %}{% endblock %}
         <div class="col-md-8">
             {% block article %}{% endblock %}
         </div>
 
-        <div class="col-md-4">
-        {% block sidebar %}{% endblock %}
+        <div class="col-md-4 pull-left sidebar">
+            <div class="well">
+                <h4>Поиск</h4>
+                <div class="input-group">
+                    <input type="text" class="form-control">
+                    <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        </span>
+                </div>
+            </div>
+
+            <div class="well">
+                <h4>Последние комментарии</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">1</li>
+                    <li class="list-group-item">2</li>
+                    <li class="list-group-item">3</li>
+                </ul>
+            </div>
+
         </div>
 
     </div>

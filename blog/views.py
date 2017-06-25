@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView
 from blog.models import *
-from blog.forms import RegisterForm
+from blog.forms import RegisterForm, CommentAddForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class RegisterUserView(CreateView):
@@ -21,10 +22,29 @@ class IndexListView(ListView):
 
 class ArticleDetailView(DetailView):
     model = Article
-    # def get_context_data(self, **kwargs):
-    #     context = super(ArticleDetailView, self).get_context_data(**kwargs)
-    #     context['comment_list'] = Comment.objects.select_related()
-    #     return context
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        context['comment_form'] = CommentAddForm(initial={'article': self.object.pk})
+        return context
+
+
+class CommentCreate(CreateView):
+    model = Article
+    form_class = CommentAddForm
+    template_name = "blog/forms/comment_form.html"
+    success_message = "Комментарий успешно добавлен!"
+    #success_url = '/blog'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(CommentCreate, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(CommentCreate, self).form_valid(form)
+
+
 
 
 class CategoryDetailView(DetailView):
@@ -52,21 +72,12 @@ class UserDetailView(DetailView):
         return context
 
 
-class CommentCreate(CreateView):
-    model = Comment
-    fields = ['comment_text', 'article']
-    template_name = "blog/forms/comment_form.html"
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super(CommentCreate, self).form_valid(form)
-
-
-class ArticleCreate(CreateView):
+class ArticleCreate(SuccessMessageMixin, CreateView):
     model = Article
     template_name = "blog/forms/article_form.html"
     fields = ['title', 'image', 'content', 'category']
     success_url = '/blog'
+    success_message = "Статья успешно добавлена! После проверки админом, ваша статья опубликуется."
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
