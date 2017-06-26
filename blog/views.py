@@ -6,6 +6,7 @@ from blog.models import *
 from django.db.models import Q
 from blog.forms import RegisterForm, CommentAddForm, ArticleRateForm
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class RegisterUserView(CreateView):
@@ -42,13 +43,9 @@ class ArticleDetailView(DetailView):
         return context
 
 
-class CommentCreateView(CreateView):
+class CommentCreateView(LoginRequiredMixin, CreateView):
     form_class = CommentAddForm
     template_name = "blog/forms/comment_form.html"
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(CommentCreateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -72,13 +69,13 @@ class CategoryDetailView(DetailView):
         return context
 
 
-class UserArticlesView(DetailView):
+class UserArticlesView(LoginRequiredMixin, DetailView):
     model = User
     template_name = "blog/user_article_detail.html"
     slug_field = 'id'
 
 
-class UserDetailView(DetailView):
+class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
     template_name = "blog/user_detail.html"
 
@@ -88,29 +85,21 @@ class UserDetailView(DetailView):
         return context
 
 
-class ArticleCreateView(SuccessMessageMixin, CreateView):
+class ArticleCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Article
     template_name = "blog/forms/article_form.html"
     fields = ['title', 'image', 'content', 'category']
     success_url = '/blog'
     success_message = "Статья успешно добавлена! После проверки админом, ваша статья опубликуется."
 
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(ArticleCreateView, self).dispatch(request, *args, **kwargs)
-
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super(ArticleCreateView, self).form_valid(form)
 
 
-class ArticleRateView(CreateView):
+class ArticleRateView(LoginRequiredMixin, CreateView):
     template_name = "blog/forms/article_rate_form.html"
     form_class = ArticleRateForm
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(ArticleRateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
