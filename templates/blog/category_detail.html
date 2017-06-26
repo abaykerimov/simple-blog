@@ -4,9 +4,9 @@
 
 {% block article %}
     {% for article in article_list %}
-        <h2>
+        <h3>
             <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
-        </h2>
+        </h3>
         <p class="lead">
             <a href="{% url 'user_profile' article.author.id %}">{{ article.author }}</a>
         </p>
@@ -35,6 +35,5 @@
 
 {% endblock postbtn %}
 {% block sidebar %}
-    {% include "blog/sidebar_article_list.html" %}
     {% include "blog/sidebar_comment_list.html" %}
 {% endblock sidebar %}

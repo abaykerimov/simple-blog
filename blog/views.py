@@ -107,7 +107,6 @@ class ArticleCreateView(SuccessMessageMixin, CreateView):
 class ArticleRateView(CreateView):
     template_name = "blog/forms/article_rate_form.html"
     form_class = ArticleRateForm
-    http_method_names = ['post']
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -125,4 +124,3 @@ class ArticleRateView(CreateView):
                 'status': 'success',
                 'counts': qs.count()
             })
-

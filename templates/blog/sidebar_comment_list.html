@@ -1,8 +1,23 @@
 <div class="well">
     <h4>Последние комментарии</h4>
-    <ul class="list-group">
-        <li class="list-group-item">1</li>
-        <li class="list-group-item">2</li>
-        <li class="list-group-item">3</li>
-    </ul>
+    <div class="panel panel-white post panel-shadow">
+    <div class="post-footer">
+        <ul class="comments-list">
+            {% for comment in comments_list %}
+                <li class="comment">
+                    <a class="pull-left" href="#">
+                        <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+                    </a>
+                    <div class="comment-body">
+                        <div class="comment-heading">
+                            <h4 class="user">{{ comment.author }}</h4>
+                            <h5 class="time">{{ comment.created_date }}</h5>
+                        </div>
+                        <a href="{% url 'article_detail' comment.article_id %}#comments"><p>{{ comment.comment_text }}</p></a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 </div>
