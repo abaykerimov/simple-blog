@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head_title %}Поиск по статьям{% endblock %}
+
+{% block article %}
+    {% for article in article_list %}
+        <h3>
+            <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+        </h3>
+        <p class="lead">
+            <a href="{% url 'user_profile' article.author.id %}">{{ article.author }}</a>
+        </p>
+        <p><span class="glyphicon glyphicon-time"></span> {{ article.published }}</p>
+        <hr>
+        <img class="img-responsive" src="{% static 'images' %}/{{ article.image }}" alt="">
+        <hr>
+        <a class="btn btn-primary" href="{% url 'article_detail' article.id %}">Читать дальше <span
+                class="glyphicon glyphicon-chevron-right"></span></a>
+
+        <hr>
+    {% endfor %}
+
+    {% if is_paginated %}
+        {% include "blog/pagination.html" %}
+    {% endif %}
+{% endblock %}
+{% block postbtn %}
+    <a href="{% url 'article_create' %}" class="btn btn-success btn-text">
+        <i class="glyphicon glyphicon-plus"></i><span class="add-text">Добавить пост</span></a>
+
+{% endblock postbtn %}
+{% block sidebar %}
+    {% include "blog/sidebar_search.html" %}
+    {% include "blog/sidebar_article_list.html" %}
+    {% include "blog/sidebar_comment_list.html" %}
+{% endblock sidebar %}

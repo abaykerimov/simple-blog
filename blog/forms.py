@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-from blog.models import Article, Comment
+from blog.models import ArticleRating, Comment
 
 
 class LoginForm(AuthenticationForm):
@@ -27,5 +27,15 @@ class CommentAddForm(forms.ModelForm):
         fields = ['comment_text', 'article']
         widgets = {
             'comment_text': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Оставьте комментарий', 'rows': '3'}),
+            'article': forms.HiddenInput(),
+        }
+
+
+class ArticleRateForm(forms.ModelForm):
+
+    class Meta:
+        model = ArticleRating
+        fields = ['article']
+        widgets = {
             'article': forms.HiddenInput(),
         }

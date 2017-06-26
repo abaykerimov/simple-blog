@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
+from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView
 from blog.models import *
-from blog.forms import RegisterForm, CommentAddForm
+from django.db.models import Q, Count
+from blog.forms import RegisterForm, CommentAddForm, ArticleRateForm
 from django.contrib.messages.views import SuccessMessageMixin
 
 
@@ -19,6 +20,17 @@ class IndexListView(ListView):
     template_name = 'index.html'
     paginate_by = 10
 
+    def get_queryset(self):
+        context = super(IndexListView, self).get_queryset()
+        query = self.request.GET.get("q")
+        if query:
+            return context.filter(
+                Q(title__icontains=query) |
+                Q(content__icontains=query)
+            )
+        else:
+            return context
+
 
 class ArticleDetailView(DetailView):
     model = Article
@@ -26,25 +38,29 @@ class ArticleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
         context['comment_form'] = CommentAddForm(initial={'article': self.object.pk})
+        context['rate_form'] = ArticleRateForm(initial={'article': self.object.pk})
         return context
 
 
-class CommentCreate(CreateView):
-    model = Article
+class CommentCreateView(SuccessMessageMixin, CreateView):
     form_class = CommentAddForm
     template_name = "blog/forms/comment_form.html"
-    success_message = "Комментарий успешно добавлен!"
-    #success_url = '/blog'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super(CommentCreate, self).dispatch(request, *args, **kwargs)
+        return super(CommentCreateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super(CommentCreate, self).form_valid(form)
-
-
+        form.save()
+        qs = Comment.objects.get(id=form.instance.id)
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Комментарий успешно добавлен!',
+            'author': qs.author.username,
+            'created': qs.created_date.date(),
+            'text': qs.comment_text
+        })
 
 
 class CategoryDetailView(DetailView):
@@ -72,7 +88,7 @@ class UserDetailView(DetailView):
         return context
 
 
-class ArticleCreate(SuccessMessageMixin, CreateView):
+class ArticleCreateView(SuccessMessageMixin, CreateView):
     model = Article
     template_name = "blog/forms/article_form.html"
     fields = ['title', 'image', 'content', 'category']
@@ -81,10 +97,32 @@ class ArticleCreate(SuccessMessageMixin, CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super(ArticleCreate, self).dispatch(request, *args, **kwargs)
+        return super(ArticleCreateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super(ArticleCreate, self).form_valid(form)
+        return super(ArticleCreateView, self).form_valid(form)
 
+
+class ArticleRateView(CreateView):
+    template_name = "blog/forms/article_rate_form.html"
+    form_class = ArticleRateForm
+    http_method_names = ['post']
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ArticleRateView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        check = ArticleRating.objects.filter(article=form.instance.article, user=form.instance.user).exists()
+        if check:
+            return JsonResponse({'status': 'warning', 'message': 'Вы уже голосовали'})
+        else:
+            form.save()
+            qs = ArticleRating.objects.filter(article=form.instance.article)
+            return JsonResponse({
+                'status': 'success',
+                'counts': qs.count()
+            })
 

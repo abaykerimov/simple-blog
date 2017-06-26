@@ -42,7 +42,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-            {% endblock %}
+            {% endblock category %}
             {% if user.is_authenticated %}
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
@@ -79,45 +79,26 @@
 
         </div>
     </nav>
-    {% block messages %}
-        {% if messages %}
-            {% for message in messages %}
-                <div {% if message.tags %}class="alert alert-{{ message.tags }} alert-dismissable col-md-8"{% endif %}>
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>{{ message|capfirst }}</strong>
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endblock messages %}
     <div class="row">
-        {% block postbtn %}{% endblock %}
-        {% block content %}{% endblock %}
-        <div class="col-md-8">
-            {% block article %}{% endblock %}
+        {% block postbtn %}{% endblock postbtn %}
+        {% block content %}{% endblock content %}
+        <div class="col-xs-1">{% block rating %}{% endblock rating %}</div>
+        <div class="col-md-7">
+            {% block messages %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div {% if message.tags %}class="alert alert-{{ message.tags }} alert-dismissable"{% endif %}>
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ message|capfirst }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endblock messages %}
+            {% block article %}{% endblock article %}
         </div>
 
-        <div class="col-md-4 pull-left sidebar">
-            <div class="well">
-                <h4>Поиск</h4>
-                <div class="input-group">
-                    <input type="text" class="form-control">
-                    <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                        </span>
-                </div>
-            </div>
-
-            <div class="well">
-                <h4>Последние комментарии</h4>
-                <ul class="list-group">
-                    <li class="list-group-item">1</li>
-                    <li class="list-group-item">2</li>
-                    <li class="list-group-item">3</li>
-                </ul>
-            </div>
-
+        <div class="col-md-4 pull-right sidebar">
+            {% block sidebar %}{% endblock sidebar %}
         </div>
 
     </div>

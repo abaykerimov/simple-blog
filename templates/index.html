@@ -9,8 +9,14 @@
         </h3>
         <p class="lead">
             <a href="{% url 'user_profile' article.author.id %}">{{ article.author }}</a>
+        {{ article.categories }}
         </p>
-        <p><span class="glyphicon glyphicon-time"></span> {{ article.published }}</p>
+        <p>
+            <span class="glyphicon glyphicon-time"></span> {{ article.published }}
+            <a href="{% url 'article_detail' article.id %}#comments">
+                <span style="float: right;margin-right: 10px;">Комментариев: {{ article.comment_set.count }}</span>
+            </a>
+        </p>
         <hr>
         <img class="img-responsive" src="{% static 'images' %}/{{ article.image }}" alt="">
         <hr>
@@ -26,6 +32,11 @@
 {% endblock %}
 {% block postbtn %}
     <a href="{% url 'article_create' %}" class="btn btn-success btn-text">
-        <i class="glyphicon glyphicon-plus"></i><span class="add-text">Добавить пост</span></a>
+        <i class="glyphicon glyphicon-plus post-add"></i><span class="add-text">Добавить пост</span></a>
 
-{% endblock %}
+{% endblock postbtn %}
+{% block sidebar %}
+    {% include "blog/sidebar_search.html" %}
+    {% include "blog/sidebar_article_list.html" %}
+    {% include "blog/sidebar_comment_list.html" %}
+{% endblock sidebar %}

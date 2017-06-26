@@ -11,8 +11,13 @@
         <p class="lead">
             <a href="">{{ article.author }}</a>
         </p>
-        <p><span class="glyphicon glyphicon-time"></span> {{ article.published }} {% if article.status == 0 %} -
-            <span style="color: red">Не опубликован</span>{% endif %}</p>
+        <p>
+            <span class="glyphicon glyphicon-time"></span> {{ article.published }}{% if article.status == 0 %} -
+            <span style="color: red">Не опубликован</span>{% endif %}
+            <a href="{% url 'article_detail' article.id %}#comments">
+                <span style="float: right;margin-right: 10px;">Комментариев: {{ article.comment_set.count }}</span>
+            </a>
+        </p>
         <hr>
         <img class="img-responsive" src="{% static 'images' %}/{{ article.image }}" alt="">
         <hr>
@@ -28,3 +33,12 @@
         {% include "blog/pagination.html" %}
     {% endif %}
 {% endblock %}
+{% block postbtn %}
+    <a href="{% url 'article_create' %}" class="btn btn-success btn-text">
+        <i class="glyphicon glyphicon-plus post-add"></i><span class="add-text">Добавить пост</span></a>
+
+{% endblock postbtn %}
+{% block sidebar %}
+    {% include "blog/sidebar_article_list.html" %}
+    {% include "blog/sidebar_comment_list.html" %}
+{% endblock sidebar %}

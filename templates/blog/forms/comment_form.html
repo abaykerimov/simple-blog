@@ -1,10 +1,14 @@
-<form method="post" action="{% url 'comment_add' %}">
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'comment_add' %}" id="comment_add">
     {% csrf_token %}
 
     <div class="form-group">
     {{ form }}
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-default">Отправить</button>
+        <button id="btn_comment" type="submit" class="btn btn-default">Отправить</button>
     </div>
 </form>
+{% else %}
+    <p class="text-center">Для того, чтобы оставить комментарий, пожалуйста, <a href="/accounts/login">авторизуйтесь</a></p>
+{% endif %}

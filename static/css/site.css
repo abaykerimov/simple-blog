@@ -143,7 +143,7 @@ span.add-text {
     margin-top: 20px;
 }
 
-.glyphicon-plus {
+.post-add {
   font-size: 18px;
 }
 
@@ -157,6 +157,26 @@ span.add-text {
   width: 30.5%;
   margin-top:160px;
   margin-left: 15px;
+}
+
+.glyphicon-comment {
+  top: 3px;
+}
+.plus-rate, .minus-rate {
+  top: 0;
+  transition: top ease 0.5s;
+  font-size: 20px;
+  color: #00cc66;
+}
+
+.plus-rate:hover {
+  top: -5px;
+  cursor: pointer;
+}
+
+.rate-count {
+  font-size: 24px;
+  font-weight: bolder;
 }
 
 @media (max-width: 992px) {

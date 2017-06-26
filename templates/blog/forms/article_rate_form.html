@@ -1,0 +1,12 @@
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'article_rate' %}" id="article_rate">
+    {% csrf_token %}
+    {{ form }}
+    <div class="form-group rate-group">
+        <span class="glyphicon glyphicon-arrow-up plus-rate" title="Нравится? Жми!"></span>
+        <span class="rate-count">{{ article.articlerating_set.count }}</span>
+    </div>
+</form>
+{% else %}
+    <p class="text-left">Для того чтобы голосовать, пожалуйста, <a href="/accounts/login">авторизуйтесь</a></p>
+{% endif %}
