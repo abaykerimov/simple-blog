@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView
 from blog.models import *
-from django.db.models import Q, Count
+from django.db.models import Q
 from blog.forms import RegisterForm, CommentAddForm, ArticleRateForm
 from django.contrib.messages.views import SuccessMessageMixin
 
@@ -42,7 +42,7 @@ class ArticleDetailView(DetailView):
         return context
 
 
-class CommentCreateView(SuccessMessageMixin, CreateView):
+class CommentCreateView(CreateView):
     form_class = CommentAddForm
     template_name = "blog/forms/comment_form.html"
 
